@@ -102,9 +102,9 @@ public struct XLSXExporter: Sendable {
         for visit in visits {
             let matchedPlace = visit.placeId.flatMap { placesMap[$0] }
             let placeName = matchedPlace?.name ?? "Lugar sin nombre"
-            let categoryName = matchedPlace?.category.displayName ?? PlaceCategory.other.displayName
-            let arrivalStr = isoFormatter.string(from: visit.arrivalDate)
-            let departureStr = visit.departureDate.map { isoFormatter.string(from: $0) } ?? "En curso"
+            let categoryName = matchedPlace?.category.displayName ?? PlaceCategory.otro.displayName
+            let arrivalStr = isoFormatter.string(from: visit.startDate)
+            let departureStr = visit.endDate.map { isoFormatter.string(from: $0) } ?? "En curso"
             let durationMinutes = visit.duration / 60.0
             let durationFormatted = formatDuration(visit.duration)
 
@@ -116,8 +116,8 @@ public struct XLSXExporter: Sendable {
                 (.string(departureStr), false),
                 (.number(Double(round(10 * durationMinutes) / 10)), false),
                 (.string(durationFormatted), false),
-                (.string(visit.deviceSource.displayName), false),
-                (.string(visit.isMovingDetected ? "Sí" : "No"), false),
+                (.string(visit.source.displayName), false),
+                (.string("No"), false),
                 (.number(visit.latitude), false),
                 (.number(visit.longitude), false),
                 (.string(visit.isOngoing ? "En curso" : "Completada"), false)

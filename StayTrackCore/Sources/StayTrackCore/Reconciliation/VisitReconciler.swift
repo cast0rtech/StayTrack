@@ -3,111 +3,115 @@ import Foundation
 /// Motor de reconciliación de estancias entre Apple Watch e iPhone.
 ///
 /// Reglas de dominio implementadas:
-/// 1. Prioridad del Apple Watch: Cuando el Watch registra datos en el mismo intervalo temporal,
-///    sus estancias prevalecen sobre las del iPhone.
-/// 2. Dispositivo en movimiento vs. Estático: Si el iPhone quedó quieto (ej. olvidado en una mesa)
-///    mientras el Watch detectó movimiento o registró estancia en otro lugar, el dispositivo que se mueve
-///    prevalece, recortando o descartando la estancia del iPhone en el tramo solapado.
-/// 3. Tipos de solapamiento:
-///    - Solapamiento total: El iPhone queda totalmente absorbido por el Watch -> la estancia del iPhone se descarta.
-///    - Solapamiento parcial (inicio o fin): La estancia del iPhone se recorta en la frontera de la estancia del Watch.
+/// 1. Prioridad del Apple Watch: El reloj tiene prioridad.
+/// 2. Solapamiento con reloj: Un Visit de origen phone que se solape con movimiento del reloj
+///    (MovementSample o Visit watch en otro lugar) se recorta o descarta en el tramo solapado.
+/// 3. Casos de solapamiento:
+///    - Solapamiento total: El Visit del phone queda totalmente cubierto -> se descarta.
+///    - Solapamiento parcial: Se recorta en el inicio (cabeza) o fin (cola) según la frontera del reloj.
 ///      Si tras el recorte la duración resultante es inferior a 2 minutos (120 s), se descarta.
-///    - Solapamiento nulo: Ambas estancias coexisten sin alteración.
-/// 4. Upsert por UUID estable: Garantiza idempotencia ante sincronizaciones repetidas.
+///    - Solapamiento nulo: No existe intersección temporal; la estancia del phone se conserva íntegra.
 public struct VisitReconciler: Sendable {
     /// Duración mínima en segundos para que una estancia recortada siga siendo válida
     public static let minimumValidDuration: TimeInterval = 120.0
 
-    /// Reconcilia listas de VisitDTO provenientes de iPhone y Apple Watch.
+    /// Reconcilia visitas de iPhone considerando tanto visitas del Watch como muestras de movimiento del reloj.
     public static func reconcile(
         iphoneVisits: [VisitDTO],
-        watchVisits: [VisitDTO]
+        watchVisits: [VisitDTO] = [],
+        watchMovements: [MovementSampleDTO] = []
     ) -> [VisitDTO] {
-        // Mapa base con las visitas del Watch (las cuales tienen prioridad y no se recortan por el iPhone)
-        var reconciledWatchVisits = [UUID: VisitDTO]()
-        for visit in watchVisits {
-            reconciledWatchVisits[visit.id] = visit
+        // Construir lista de intervalos dominantes del reloj (visitas del watch + muestras de movimiento del watch)
+        var watchIntervals: [DateInterval] = []
+
+        for wv in watchVisits {
+            let start = wv.startDate
+            let end = wv.endDate ?? Date()
+            if end > start {
+                watchIntervals.append(DateInterval(start: start, end: end))
+            }
         }
 
-        var adjustedIphoneVisits = [VisitDTO]()
+        for wm in watchMovements where wm.device == .watch {
+            let start = wm.startDate
+            let end = wm.endDate
+            if end > start {
+                watchIntervals.append(DateInterval(start: start, end: end))
+            }
+        }
 
-        for iphoneVisit in iphoneVisits {
-            var segments: [VisitDTO] = [iphoneVisit]
+        var reconciledPhoneVisits: [VisitDTO] = []
 
-            // Iterar sobre cada visita del Watch para aplicar recortes / descartes en caso de conflicto
-            for (_, watchVisit) in reconciledWatchVisits {
-                var nextSegments = [VisitDTO]()
+        for phoneVisit in iphoneVisits {
+            var segments: [VisitDTO] = [phoneVisit]
+
+            // Recortar secuencialmente contra cada intervalo de actividad del reloj
+            for interval in watchIntervals {
+                var nextSegments: [VisitDTO] = []
 
                 for segment in segments {
-                    let result = reconcileSegment(iphoneSegment: segment, against: watchVisit)
-                    nextSegments.append(contentsOf: result)
+                    let adjusted = trimSegment(segment, against: interval)
+                    nextSegments.append(contentsOf: adjusted)
                 }
 
                 segments = nextSegments
-                if segments.isEmpty {
-                    break
-                }
+                if segments.isEmpty { break }
             }
 
-            adjustedIphoneVisits.append(contentsOf: segments)
+            reconciledPhoneVisits.append(contentsOf: segments)
         }
 
-        // Combinar todas las visitas reconciliadas
-        var allVisits = Array(reconciledWatchVisits.values)
-        allVisits.append(contentsOf: adjustedIphoneVisits)
+        // Combinar visitas del watch (intactas) y las visitas del phone reconciliadas
+        var allVisits = watchVisits
+        allVisits.append(contentsOf: reconciledPhoneVisits)
 
-        // Ordenar cronológicamente por llegada
-        return allVisits.sorted { $0.arrivalDate < $1.arrivalDate }
+        // Ordenar cronológicamente por fecha de inicio
+        return allVisits.sorted { $0.startDate < $1.startDate }
     }
 
-    /// Resuelve el conflicto entre un segmento de visita de iPhone y una visita de Apple Watch.
-    /// Retorna 0, 1 o 2 segmentos de iPhone ajustados.
-    public static func reconcileSegment(
-        iphoneSegment: VisitDTO,
-        against watchVisit: VisitDTO
+    /// Resuelve el conflicto entre un segmento de visita de iPhone y un intervalo del Watch
+    public static func trimSegment(
+        _ segment: VisitDTO,
+        against watchInterval: DateInterval
     ) -> [VisitDTO] {
-        let ipArrival = iphoneSegment.arrivalDate
-        let ipDeparture = iphoneSegment.departureDate ?? Date()
+        let pStart = segment.startDate
+        let pEnd = segment.endDate ?? Date()
 
-        let wArrival = watchVisit.arrivalDate
-        let wDeparture = watchVisit.departureDate ?? Date()
+        let wStart = watchInterval.start
+        let wEnd = watchInterval.end
 
-        // 1. Comprobar si existe solapamiento temporal
-        let overlapStart = max(ipArrival, wArrival)
-        let overlapEnd = min(ipDeparture, wDeparture)
-
-        // Solapamiento nulo: no hay intersección temporal
+        // 1. Solapamiento nulo: no hay intersección temporal
+        let overlapStart = max(pStart, wStart)
+        let overlapEnd = min(pEnd, wEnd)
         guard overlapStart < overlapEnd else {
-            return [iphoneSegment]
+            return [segment]
         }
 
-        // 2. Solapamiento Total:
-        // Caso A: El Watch cubre completamente el intervalo del iPhone
-        if wArrival <= ipArrival && wDeparture >= ipDeparture {
-            // El Visit del iPhone queda totalmente descartado
-            return []
+        // 2. Solapamiento total: El Watch cubre completamente la estancia del iPhone
+        if wStart <= pStart && wEnd >= pEnd {
+            return [] // Descartar totalmente
         }
 
-        // 3. Solapamiento Total Inverso: El iPhone cubre completamente al Watch (el Watch está en medio)
-        if ipArrival < wArrival && ipDeparture > wDeparture {
-            var result = [VisitDTO]()
+        // 3. Solapamiento total inverso: El Watch ocurre en medio de la estancia del iPhone
+        if pStart < wStart && pEnd > wEnd {
+            var result: [VisitDTO] = []
 
-            // Segmento previo al Watch
-            let preDuration = wArrival.timeIntervalSince(ipArrival)
+            // Tramo anterior al Watch
+            let preDuration = wStart.timeIntervalSince(pStart)
             if preDuration >= minimumValidDuration {
-                var pre = iphoneSegment
-                pre.id = UUID() // Nuevo segmento con UUID único derivado
-                pre.departureDate = wArrival
+                var pre = segment
+                pre.id = UUID()
+                pre.endDate = wStart
                 pre.updatedAt = Date()
                 result.append(pre)
             }
 
-            // Segmento posterior al Watch
-            let postDuration = ipDeparture.timeIntervalSince(wDeparture)
+            // Tramo posterior al Watch
+            let postDuration = pEnd.timeIntervalSince(wEnd)
             if postDuration >= minimumValidDuration {
-                var post = iphoneSegment
+                var post = segment
                 post.id = UUID()
-                post.arrivalDate = wDeparture
+                post.startDate = wEnd
                 post.updatedAt = Date()
                 result.append(post)
             }
@@ -115,12 +119,12 @@ public struct VisitReconciler: Sendable {
             return result
         }
 
-        // 4. Solapamiento Parcial (Cola): El iPhone empezó antes, pero el Watch empezó antes de que el iPhone terminara
-        if ipArrival < wArrival && ipDeparture <= wDeparture {
-            let remainingDuration = wArrival.timeIntervalSince(ipArrival)
+        // 4. Solapamiento parcial (cola): El iPhone empezó antes, y el Watch solapó el final
+        if pStart < wStart && pEnd <= wEnd {
+            let remainingDuration = wStart.timeIntervalSince(pStart)
             if remainingDuration >= minimumValidDuration {
-                var trimmed = iphoneSegment
-                trimmed.departureDate = wArrival
+                var trimmed = segment
+                trimmed.endDate = wStart
                 trimmed.updatedAt = Date()
                 return [trimmed]
             } else {
@@ -128,12 +132,12 @@ public struct VisitReconciler: Sendable {
             }
         }
 
-        // 5. Solapamiento Parcial (Cabeza): El Watch empezó antes, y el iPhone continuó después de la salida del Watch
-        if ipArrival >= wArrival && ipDeparture > wDeparture {
-            let remainingDuration = ipDeparture.timeIntervalSince(wDeparture)
+        // 5. Solapamiento parcial (cabeza): El Watch solapó el inicio del iPhone
+        if pStart >= wStart && pEnd > wEnd {
+            let remainingDuration = pEnd.timeIntervalSince(wEnd)
             if remainingDuration >= minimumValidDuration {
-                var trimmed = iphoneSegment
-                trimmed.arrivalDate = wDeparture
+                var trimmed = segment
+                trimmed.startDate = wEnd
                 trimmed.updatedAt = Date()
                 return [trimmed]
             } else {
@@ -141,22 +145,6 @@ public struct VisitReconciler: Sendable {
             }
         }
 
-        return [iphoneSegment]
-    }
-
-    /// Realiza upsert de visitas en un diccionario existente basado en UUID y updatedAt.
-    public static func upsertVisits(
-        incoming: [VisitDTO],
-        into existing: inout [UUID: VisitDTO]
-    ) {
-        for visit in incoming {
-            if let current = existing[visit.id] {
-                if visit.updatedAt >= current.updatedAt {
-                    existing[visit.id] = visit
-                }
-            } else {
-                existing[visit.id] = visit
-            }
-        }
+        return [segment]
     }
 }

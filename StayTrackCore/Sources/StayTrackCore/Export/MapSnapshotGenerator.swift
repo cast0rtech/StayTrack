@@ -7,9 +7,11 @@ import ImageIO
 #if canImport(UIKit)
 import UIKit
 public typealias PlatformImage = UIImage
+public typealias PlatformColor = UIColor
 #elseif canImport(AppKit)
 import AppKit
 public typealias PlatformImage = NSImage
+public typealias PlatformColor = NSColor
 #endif
 
 /// Generador de capturas de mapa en alta resolución con lugares marcados y radios visualizados.
@@ -58,8 +60,6 @@ public struct MapSnapshotGenerator: Sendable {
     private static func drawOverlays(places: [PlaceDTO], snapshot: MKMapSnapshotter.Snapshot, cgContext: CGContext) {
         let cyanFill = CGColor(red: 0.0, green: 0.9, blue: 1.0, alpha: 0.2)
         let cyanStroke = CGColor(red: 0.0, green: 0.9, blue: 1.0, alpha: 0.8)
-        let favoriteFill = CGColor(red: 1.0, green: 0.2, blue: 0.5, alpha: 1.0)
-        let standardFill = CGColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0)
         let whiteColor = CGColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
         for place in places {
@@ -85,8 +85,8 @@ public struct MapSnapshotGenerator: Sendable {
             cgContext.strokeEllipse(in: circleRect)
             cgContext.restoreGState()
 
-            // 2. Dibujar pin marcador del lugar
-            let pinRadius: CGFloat = place.isFavorite ? 14 : 10
+            // 2. Dibujar pin marcador del lugar coloreado por categoría
+            let pinRadius: CGFloat = place.isFavorite ? 14 : 11
             let pinRect = CGRect(
                 x: point.x - pinRadius,
                 y: point.y - pinRadius,
@@ -94,13 +94,71 @@ public struct MapSnapshotGenerator: Sendable {
                 height: pinRadius * 2
             )
 
+            let catColor = categoryColor(for: place.category)
             cgContext.saveGState()
-            cgContext.setFillColor(place.isFavorite ? favoriteFill : standardFill)
+            cgContext.setFillColor(catColor)
             cgContext.fillEllipse(in: pinRect)
-            cgContext.setStrokeColor(whiteColor)
-            cgContext.setLineWidth(2.5)
+            cgContext.setStrokeColor(place.isFavorite ? CGColor(red: 1.0, green: 0.84, blue: 0.0, alpha: 1.0) : whiteColor)
+            cgContext.setLineWidth(place.isFavorite ? 3.0 : 2.0)
             cgContext.strokeEllipse(in: pinRect)
             cgContext.restoreGState()
+
+            // 3. Dibujar etiqueta con el nombre del lugar visible
+            let placeName = place.name.isEmpty ? place.category.displayName : place.name
+            let font = CTFontCreateWithName("HelveticaNeue-Bold" as CFString, 12, nil)
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .foregroundColor: PlatformColor.white
+            ]
+            let attrStr = NSAttributedString(string: placeName, attributes: attributes)
+            let line = CTLineCreateWithAttributedString(attrStr)
+            let bounds = CTLineGetBoundsWithOptions(line, .useGlyphPathBounds)
+
+            let pillPaddingX: CGFloat = 8
+            let pillPaddingY: CGFloat = 4
+            let pillWidth = bounds.width + pillPaddingX * 2
+            let pillHeight = bounds.height + pillPaddingY * 2
+            let pillX = point.x - (pillWidth / 2.0)
+            let pillY = point.y + pinRadius + 4
+
+            // Fondo oscuro para garantizar contraste y visibilidad del texto
+            cgContext.saveGState()
+            let pillRect = CGRect(x: pillX, y: pillY, width: pillWidth, height: pillHeight)
+            let path = CGPath(roundedRect: pillRect, cornerWidth: 6, cornerHeight: 6, transform: nil)
+            cgContext.setFillColor(CGColor(red: 0.1, green: 0.1, blue: 0.15, alpha: 0.85))
+            cgContext.addPath(path)
+            cgContext.fillPath()
+            cgContext.setStrokeColor(catColor)
+            cgContext.setLineWidth(1.0)
+            cgContext.addPath(path)
+            cgContext.strokePath()
+
+            // Renderizar texto
+            #if os(iOS)
+            UIGraphicsPushContext(cgContext)
+            attrStr.draw(at: CGPoint(x: pillX + pillPaddingX, y: pillY + pillPaddingY - 1))
+            UIGraphicsPopContext()
+            #elseif os(macOS)
+            let textPos = CGPoint(x: pillX + pillPaddingX, y: pillY + pillPaddingY)
+            cgContext.textPosition = textPos
+            CTLineDraw(line, cgContext)
+            #endif
+            cgContext.restoreGState()
+        }
+    }
+
+    private static func categoryColor(for category: PlaceCategory) -> CGColor {
+        switch category {
+        case .casa:
+            return CGColor(red: 0.0, green: 0.89, blue: 1.0, alpha: 1.0) // Cian
+        case .trabajo:
+            return CGColor(red: 0.49, green: 0.30, blue: 1.0, alpha: 1.0) // Púrpura
+        case .entrenamiento:
+            return CGColor(red: 1.0, green: 0.32, blue: 0.32, alpha: 1.0) // Coral
+        case .medico:
+            return CGColor(red: 0.41, green: 0.94, blue: 0.68, alpha: 1.0) // Esmeralda
+        case .otro:
+            return CGColor(red: 1.0, green: 0.84, blue: 0.25, alpha: 1.0) // Ámbar
         }
     }
 

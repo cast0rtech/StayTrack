@@ -34,10 +34,10 @@ public struct CSVExporter: Sendable {
         for visit in visits {
             let matchedPlace = visit.placeId.flatMap { placesMap[$0] }
             let placeName = matchedPlace?.name ?? "Lugar sin nombre"
-            let categoryName = matchedPlace?.category.displayName ?? PlaceCategory.other.displayName
+            let categoryName = matchedPlace?.category.displayName ?? PlaceCategory.otro.displayName
 
-            let arrivalStr = isoFormatter.string(from: visit.arrivalDate)
-            let departureStr = visit.departureDate.map { isoFormatter.string(from: $0) } ?? "En curso"
+            let arrivalStr = isoFormatter.string(from: visit.startDate)
+            let departureStr = visit.endDate.map { isoFormatter.string(from: $0) } ?? "En curso"
             let durationSeconds = Int(visit.duration)
             let durationMinutes = String(format: "%.1f", visit.duration / 60.0)
             let durationFormatted = formatDuration(visit.duration)
@@ -53,8 +53,8 @@ public struct CSVExporter: Sendable {
                 durationFormatted,
                 String(format: "%.6f", visit.latitude),
                 String(format: "%.6f", visit.longitude),
-                visit.deviceSource.displayName,
-                visit.isMovingDetected ? "Sí" : "No",
+                visit.source.displayName,
+                "No",
                 visit.isOngoing ? "En curso" : "Completada"
             ]
             rows.append(row.map { escapeCSV($0) }.joined(separator: ","))

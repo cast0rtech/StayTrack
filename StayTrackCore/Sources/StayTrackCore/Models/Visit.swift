@@ -2,67 +2,119 @@ import Foundation
 import SwiftData
 
 /// Representa una estancia de tiempo registrada en un punto o lugar.
-/// Se crea cuando el usuario permanece más de 2 minutos dentro del radio de detección
-/// desde el punto ancla.
+/// Conforme a los requisitos de SwiftData para StayTrack:
+/// - id (UUID), placeId, inicio, fin (opcional si está activa),
+///   origen (enum: watch, phone), coordenada ancla, precisión.
 @Model
-public final class Visit {
+public final class Visit: Identifiable {
     public var id: UUID = UUID()
     public var placeId: UUID?
-    public var latitude: Double = 0.0
-    public var longitude: Double = 0.0
-    public var arrivalDate: Date = Date()
-    public var departureDate: Date?
-    public var deviceSourceRaw: String = DeviceSource.iphone.rawValue
-    /// Indica si durante la estancia se detectó movimiento (útil para desempate contra dispositivos estáticos)
-    public var isMovingDetected: Bool = false
-    public var createdAt: Date = Date()
-    public var updatedAt: Date = Date()
+    public var inicio: Date = Date()
+    public var fin: Date? = nil
+    public var origenRaw: String = DeviceSource.phone.rawValue
+    public var latitudAncla: Double = 0.0
+    public var longitudAncla: Double = 0.0
+    public var precision: Double = 0.0
+    public var fechaModificacion: Date = Date()
 
     public var place: Place?
 
-    public var deviceSource: DeviceSource {
+    public var origen: DeviceSource {
         get {
-            DeviceSource(rawValue: deviceSourceRaw) ?? .iphone
+            DeviceSource(rawValue: origenRaw) ?? .phone
         }
         set {
-            deviceSourceRaw = newValue.rawValue
+            origenRaw = newValue.rawValue
         }
     }
 
-    /// Duración total en segundos (o acumulada hasta el momento presente si sigue activa)
-    public var duration: TimeInterval {
-        let end = departureDate ?? Date()
-        return max(0, end.timeIntervalSince(arrivalDate))
+    public var coordenadaAncla: Coordinate {
+        get { Coordinate(latitude: latitudAncla, longitude: longitudAncla) }
+        set {
+            latitudAncla = newValue.latitude
+            longitudAncla = newValue.longitude
+        }
     }
 
-    /// Indica si la visita está todavía en curso (sin fecha de salida)
+    // MARK: - Propiedades de conveniencia en inglés
+    public var startDate: Date {
+        get { inicio }
+        set { inicio = newValue }
+    }
+    public var endDate: Date? {
+        get { fin }
+        set { fin = newValue }
+    }
+    public var source: DeviceSource {
+        get { origen }
+        set { origen = newValue }
+    }
+    public var anchorCoordinate: Coordinate {
+        get { coordenadaAncla }
+        set { coordenadaAncla = newValue }
+    }
+    public var accuracy: Double {
+        get { precision }
+        set { precision = newValue }
+    }
+
+    /// Duración total en segundos (o acumulada hasta ahora si sigue activa)
+    public var duration: TimeInterval {
+        let finalDate = fin ?? Date()
+        return max(0, finalDate.timeIntervalSince(inicio))
+    }
+
+    /// Indica si la visita está activa actualmente
     public var isOngoing: Bool {
-        return departureDate == nil
+        return fin == nil
     }
 
     public init(
         id: UUID = UUID(),
         placeId: UUID? = nil,
         place: Place? = nil,
-        latitude: Double,
-        longitude: Double,
-        arrivalDate: Date = Date(),
-        departureDate: Date? = nil,
-        deviceSource: DeviceSource = .iphone,
-        isMovingDetected: Bool = false,
-        createdAt: Date = Date(),
-        updatedAt: Date = Date()
+        inicio: Date = Date(),
+        fin: Date? = nil,
+        origen: DeviceSource = .phone,
+        coordenadaAncla: Coordinate,
+        precision: Double = 10.0,
+        fechaModificacion: Date = Date()
     ) {
         self.id = id
         self.placeId = placeId ?? place?.id
         self.place = place
-        self.latitude = latitude
-        self.longitude = longitude
-        self.arrivalDate = arrivalDate
-        self.departureDate = departureDate
-        self.deviceSourceRaw = deviceSource.rawValue
-        self.isMovingDetected = isMovingDetected
-        self.createdAt = createdAt
-        self.updatedAt = updatedAt
+        self.inicio = inicio
+        self.fin = fin
+        self.origenRaw = origen.rawValue
+        self.latitudAncla = coordenadaAncla.latitude
+        self.longitudAncla = coordenadaAncla.longitude
+        self.precision = precision
+        self.fechaModificacion = fechaModificacion
+    }
+
+    // Inicializador de conveniencia con parámetros en inglés / coordenadas individuales
+    public convenience init(
+        id: UUID = UUID(),
+        placeId: UUID? = nil,
+        place: Place? = nil,
+        startDate: Date = Date(),
+        endDate: Date? = nil,
+        source: DeviceSource = .phone,
+        latitude: Double,
+        longitude: Double,
+        accuracy: Double = 10.0,
+        updatedAt: Date = Date()
+    ) {
+        self.init(
+            id: id,
+            placeId: placeId,
+            place: place,
+            inicio: startDate,
+            fin: endDate,
+            origen: source,
+            coordenadaAncla: Coordinate(latitude: latitude, longitude: longitude),
+            precision: accuracy,
+            fechaModificacion: updatedAt
+        )
     }
 }

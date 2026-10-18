@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>StayTrack Watch</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>StayTrack Watch necesita acceso continuo a tu ubicación para registrar de forma autónoma el tiempo de estancia en cada lugar sin depender del iPhone.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>StayTrack Watch registra el tiempo de permanencia en tus lugares mientras te encuentras en la zona.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>StayTrack Watch utiliza los sensores de movimiento para verificar si estás en desplazamiento real, otorgar prioridad a las estancias del reloj y desambiguar visitas cuando el iPhone queda estático.</string>
+	<key>WKRunsIndependentlyOfCompanionApp</key>
+	<true/>
+	<key>WKCompanionAppBundleIdentifier</key>
+	<string>com.staytrack.app</string>
+</dict>
+</plist>

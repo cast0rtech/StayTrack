@@ -1,11 +1,11 @@
 import Foundation
 
-/// Origen del dispositivo que registró una visita o lectura.
-/// Según las reglas de dominio, el Apple Watch tiene prioridad de registro
-/// sobre el iPhone cuando ambos dispositivos están en uso.
+/// Origen del dispositivo que registró una estancia o muestra de movimiento.
+/// Según las reglas de dominio, el Apple Watch ('watch') tiene prioridad
+/// sobre el iPhone ('phone').
 public enum DeviceSource: String, Codable, CaseIterable, Identifiable, Sendable {
-    case watch = "watch"
-    case iphone = "iphone"
+    case watch
+    case phone
 
     public var id: String { rawValue }
 
@@ -13,7 +13,7 @@ public enum DeviceSource: String, Codable, CaseIterable, Identifiable, Sendable 
         switch self {
         case .watch:
             return "Apple Watch"
-        case .iphone:
+        case .phone:
             return "iPhone"
         }
     }
@@ -22,7 +22,7 @@ public enum DeviceSource: String, Codable, CaseIterable, Identifiable, Sendable 
         switch self {
         case .watch:
             return "applewatch"
-        case .iphone:
+        case .phone:
             return "iphone"
         }
     }

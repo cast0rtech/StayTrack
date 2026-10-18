@@ -40,7 +40,7 @@ public struct KMLExporter: Sendable {
         for visit in visits {
             let matchedPlace = visit.placeId.flatMap { placesMap[$0] }
             let name = escapeXML("Visita: \(matchedPlace?.name ?? "Punto ancla")")
-            let desc = escapeXML("Fecha: \(isoFormatter.string(from: visit.arrivalDate))<br>Duración: \(Int(visit.duration / 60)) min<br>Dispositivo: \(visit.deviceSource.displayName)")
+            let desc = escapeXML("Fecha: \(isoFormatter.string(from: visit.startDate))<br>Duración: \(Int(visit.duration / 60)) min<br>Dispositivo: \(visit.source.displayName)")
 
             xml += """
                 <Placemark>

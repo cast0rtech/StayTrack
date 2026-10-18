@@ -104,8 +104,8 @@ public final class LocationTrackingManager: NSObject, ObservableObject {
     }
 
     /// Inyecta manualmente una lectura (útil para pruebas y simulación controlada)
-    public func injectReading(_ reading: LocationReading) {
-        if let event = detector.process(reading: reading) {
+    public func injectReading(_ sample: LocationSample) {
+        if let event = detector.process(sample: sample) {
             self.recentEvent = event
             self.onDetectionEvent?(event)
         }
@@ -123,9 +123,14 @@ extension LocationTrackingManager: @preconcurrency CLLocationManagerDelegate {
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for location in locations {
             self.lastLocation = location
-            let reading = LocationReading(from: location)
+            let sample = LocationSample(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude,
+                accuracy: location.horizontalAccuracy,
+                timestamp: location.timestamp
+            )
 
-            if let event = detector.process(reading: reading) {
+            if let event = detector.process(sample: sample) {
                 self.recentEvent = event
                 self.onDetectionEvent?(event)
             }

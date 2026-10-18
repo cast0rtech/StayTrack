@@ -48,8 +48,8 @@ public struct GPXExporter: Sendable {
         for visit in visits {
             let matchedPlace = visit.placeId.flatMap { placesMap[$0] }
             let name = escapeXML("Estancia en \(matchedPlace?.name ?? "Punto ancla")")
-            let desc = escapeXML("Llegada: \(isoFormatter.string(from: visit.arrivalDate)) | Duración: \(Int(visit.duration / 60)) min | Dispositivo: \(visit.deviceSource.displayName)")
-            let time = isoFormatter.string(from: visit.arrivalDate)
+            let desc = escapeXML("Llegada: \(isoFormatter.string(from: visit.startDate)) | Duración: \(Int(visit.duration / 60)) min | Dispositivo: \(visit.source.displayName)")
+            let time = isoFormatter.string(from: visit.startDate)
 
             xml += """
               <wpt lat="\(String(format: "%.6f", visit.latitude))" lon="\(String(format: "%.6f", visit.longitude))">

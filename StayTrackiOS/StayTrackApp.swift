@@ -2,21 +2,28 @@ import SwiftUI
 import SwiftData
 import StayTrackCore
 
+/// Punto de entrada principal para StayTrack iOS.
+///
+/// Arquitectura:
+/// - Persiste localmente mediante SwiftData con el esquema unificado de StayTrackCore.
+/// - Sincroniza bidireccionalmente con StayTrack Watch mediante WatchConnectivity.
+/// - Implementa detección de respaldo con CoreLocation cuando el Apple Watch no está disponible.
 @main
 struct StayTrackApp: App {
-    var sharedModelContainer: ModelContainer = {
+    let container: ModelContainer
+
+    init() {
         do {
-            return try SwiftDataStack.createPersistentContainer()
+            self.container = try SwiftDataStack.createPersistentContainer()
         } catch {
-            fatalError("No se pudo inicializar ModelContainer en iOS: \(error)")
+            fatalError("Error crítico al inicializar SwiftData ModelContainer en iOS: \(error)")
         }
-    }()
+    }
 
     var body: some Scene {
         WindowGroup {
             iOSContentView()
-                .preferredColorScheme(.dark)
+                .modelContainer(container)
         }
-        .modelContainer(sharedModelContainer)
     }
 }

@@ -5,17 +5,20 @@ import Foundation
 public struct SyncPayload: Codable, Sendable {
     public var places: [PlaceDTO]
     public var visits: [VisitDTO]
+    public var movementSamples: [MovementSampleDTO]
     public var source: DeviceSource
     public var sentAt: Date
 
     public init(
         places: [PlaceDTO] = [],
         visits: [VisitDTO] = [],
+        movementSamples: [MovementSampleDTO] = [],
         source: DeviceSource,
         sentAt: Date = Date()
     ) {
         self.places = places
         self.visits = visits
+        self.movementSamples = movementSamples
         self.source = source
         self.sentAt = sentAt
     }

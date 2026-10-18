@@ -5,11 +5,12 @@ import SwiftData
 /// Asegura que tanto iOS como watchOS utilicen la misma configuración de esquema
 /// y opciones de persistencia sin duplicación de código.
 public struct SwiftDataStack {
-    /// Esquema oficial que agrupa Place y Visit
+    /// Esquema oficial que agrupa Place, Visit y MovementSample
     public static var schema: Schema {
         Schema([
             Place.self,
-            Visit.self
+            Visit.self,
+            MovementSample.self
         ])
     }
 
@@ -31,5 +32,11 @@ public struct SwiftDataStack {
             isStoredInMemoryOnly: false
         )
         return try ModelContainer(for: schema, configurations: [configuration])
+    }
+
+    /// Crea un contenedor estándar para la aplicación
+    @MainActor
+    public static func createModelContainer() throws -> ModelContainer {
+        try createPersistentContainer()
     }
 }
