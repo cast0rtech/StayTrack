@@ -24,7 +24,8 @@ xcodebuild build \
   CODE_SIGN_IDENTITY="" \
   CODE_SIGNING_REQUIRED=NO \
   CODE_SIGNING_ALLOWED=NO \
-  -derivedDataPath "$DERIVED_DATA" > /dev/null
+  -derivedDataPath "$DERIVED_DATA" \
+  -quiet
 
 # 2. Empaquetar StayTrack.ipa
 echo "[2/4] Empaquetando StayTrack.ipa..."
@@ -46,7 +47,8 @@ xcodebuild build \
   CODE_SIGN_IDENTITY="" \
   CODE_SIGNING_REQUIRED=NO \
   CODE_SIGNING_ALLOWED=NO \
-  -derivedDataPath "$DERIVED_DATA" > /dev/null
+  -derivedDataPath "$DERIVED_DATA" \
+  -quiet
 
 # 4. Empaquetar StayTrackWatch.ipa
 echo "[4/4] Empaquetando StayTrackWatch.ipa..."
