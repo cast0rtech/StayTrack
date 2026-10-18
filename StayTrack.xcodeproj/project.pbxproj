@@ -1,0 +1,470 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+
+		F55B30DF75E24C2A94C990F8 /* StayTrackCore in Frameworks */ = {isa = PBXBuildFile; productRef = 79721B9F7CF141E0B794EB28 /* StayTrackCore */; };
+		98D37CC29E4B4F548EC4CF90 /* StayTrackCore in Frameworks */ = {isa = PBXBuildFile; productRef = FFCC6C07A6744508A1EE4E48 /* StayTrackCore */; };
+		A2939AA81A9E4BD58E1EBDD0 /* StayTrackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EA7F63393F4DF6B1775DF0 /* StayTrackApp.swift */; };
+		20DD741D44EF439B96825788 /* iOSContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDD70DE032D42008160598C /* iOSContentView.swift */; };
+		64201C47A59943178B34653F /* iOSTrackingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32992D8879F4C38981CDA28 /* iOSTrackingViewModel.swift */; };
+		1787D5E19A2849598F7E72A6 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB6DD7AE9AB47A5BE8684DB /* DashboardView.swift */; };
+		695B71D5DB9144BF91BBCCA9 /* VisitsHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0918F2D765F49219C3ED424 /* VisitsHistoryView.swift */; };
+		D383715718F54A9EA232111E /* PlacesManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C68A5EF5974ABE9AA13FBA /* PlacesManagementView.swift */; };
+		61C0F56D4B474CB3BF40B6B8 /* ExportReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B94068BC284E5E95F76302 /* ExportReportsView.swift */; };
+		F7545E06F6A24832BECC021A /* SettingsDiagnosticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA35722B15E84D759568E5ED /* SettingsDiagnosticView.swift */; };
+		CFA46519BAC04B7398A3FAB6 /* EditPlaceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5389A8E21C3463A82E8550B /* EditPlaceSheet.swift */; };
+		BF96FCC1B7CA489D8DA39C10 /* StayTrackWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572DBEE35AA849FB8797937E /* StayTrackWatchApp.swift */; };
+		20F02C4BB03A488DB7AEB326 /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572F14BD47334D958A19D4BE /* WatchContentView.swift */; };
+		3EE2EFA7E6464FDE8C8D0D2F /* WatchTrackingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501A65AD3AC495DBAD36B1C /* WatchTrackingViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+
+		EBC55BB800F54038B2907E96 /* StayTrack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StayTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2C3D5A14BA84597BED8E4B0 /* StayTrackWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StayTrackWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5EA7F63393F4DF6B1775DF0 /* StayTrackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StayTrackApp.swift; sourceTree = "<group>"; };
+		DDDD70DE032D42008160598C /* iOSContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSContentView.swift; sourceTree = "<group>"; };
+		F32992D8879F4C38981CDA28 /* iOSTrackingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSTrackingViewModel.swift; sourceTree = "<group>"; };
+		DBB6DD7AE9AB47A5BE8684DB /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		F0918F2D765F49219C3ED424 /* VisitsHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitsHistoryView.swift; sourceTree = "<group>"; };
+		B4C68A5EF5974ABE9AA13FBA /* PlacesManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesManagementView.swift; sourceTree = "<group>"; };
+		B8B94068BC284E5E95F76302 /* ExportReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportReportsView.swift; sourceTree = "<group>"; };
+		AA35722B15E84D759568E5ED /* SettingsDiagnosticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDiagnosticView.swift; sourceTree = "<group>"; };
+		A5389A8E21C3463A82E8550B /* EditPlaceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlaceSheet.swift; sourceTree = "<group>"; };
+		572DBEE35AA849FB8797937E /* StayTrackWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StayTrackWatchApp.swift; sourceTree = "<group>"; };
+		572F14BD47334D958A19D4BE /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
+		B501A65AD3AC495DBAD36B1C /* WatchTrackingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchTrackingViewModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CFC220A11767427194180871 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F55B30DF75E24C2A94C990F8 /* StayTrackCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		12745EA29C1043BC89510CE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98D37CC29E4B4F548EC4CF90 /* StayTrackCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F3E51D6AA4A7473988D5C6C2 = {
+			isa = PBXGroup;
+			children = (
+				7613880E44B144DCB7F407D1 /* StayTrack (iOS) */,
+				2CFD1B8556F245DB96748893 /* StayTrackWatch (watchOS) */,
+				D993108DFA9E4BA0AACA1EC8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D993108DFA9E4BA0AACA1EC8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EBC55BB800F54038B2907E96 /* StayTrack.app */,
+				E2C3D5A14BA84597BED8E4B0 /* StayTrackWatch.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7613880E44B144DCB7F407D1 /* StayTrack (iOS) */ = {
+			isa = PBXGroup;
+			children = (
+				A5EA7F63393F4DF6B1775DF0 /* StayTrackApp.swift */,
+				DDDD70DE032D42008160598C /* iOSContentView.swift */,
+				F32992D8879F4C38981CDA28 /* iOSTrackingViewModel.swift */,
+				DBB6DD7AE9AB47A5BE8684DB /* DashboardView.swift */,
+				F0918F2D765F49219C3ED424 /* VisitsHistoryView.swift */,
+				B4C68A5EF5974ABE9AA13FBA /* PlacesManagementView.swift */,
+				B8B94068BC284E5E95F76302 /* ExportReportsView.swift */,
+				AA35722B15E84D759568E5ED /* SettingsDiagnosticView.swift */,
+				A5389A8E21C3463A82E8550B /* EditPlaceSheet.swift */,
+			);
+			path = StayTrackiOS;
+			sourceTree = "<group>";
+		};
+		2CFD1B8556F245DB96748893 /* StayTrackWatch (watchOS) */ = {
+			isa = PBXGroup;
+			children = (
+				572DBEE35AA849FB8797937E /* StayTrackWatchApp.swift */,
+				572F14BD47334D958A19D4BE /* WatchContentView.swift */,
+				B501A65AD3AC495DBAD36B1C /* WatchTrackingViewModel.swift */,
+			);
+			path = StayTrackWatch;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FD7C7B87E88341DFAA5781FB /* StayTrack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5C41989698C4713B12F7193 /* Build configuration list for PBXNativeTarget "StayTrack" */;
+			buildPhases = (
+				FB25A9D9CC3A4ECCAAEFED6C /* Sources */,
+				CFC220A11767427194180871 /* Frameworks */,
+				0C49307AEBDD4D7AAAE6C138 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StayTrack;
+			packageProductDependencies = (
+				79721B9F7CF141E0B794EB28 /* StayTrackCore */,
+			);
+			productName = StayTrack;
+			productReference = EBC55BB800F54038B2907E96 /* StayTrack.app */;
+			productType = "com.apple.product-type.application";
+		};
+		606F77894FF9454598175E00 /* StayTrackWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F51CFF6D6BD44A3B9E84FEC /* Build configuration list for PBXNativeTarget "StayTrackWatch" */;
+			buildPhases = (
+				A9D49CA411724113BCC7EE5D /* Sources */,
+				12745EA29C1043BC89510CE5 /* Frameworks */,
+				C52522AA2F5A4C9CA058600E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StayTrackWatch;
+			packageProductDependencies = (
+				FFCC6C07A6744508A1EE4E48 /* StayTrackCore */,
+			);
+			productName = StayTrackWatch;
+			productReference = E2C3D5A14BA84597BED8E4B0 /* StayTrackWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		09584E11B0394F3581F464D9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					FD7C7B87E88341DFAA5781FB = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					606F77894FF9454598175E00 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 934B2F2C174940DFBCDB1A88 /* Build configuration list for PBXProject "StayTrack" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F3E51D6AA4A7473988D5C6C2;
+			packageReferences = (
+				D5ACBAEAFC1648E2B2F15C7B /* StayTrackCore */,
+			);
+			productRefGroup = D993108DFA9E4BA0AACA1EC8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FD7C7B87E88341DFAA5781FB /* StayTrack */,
+				606F77894FF9454598175E00 /* StayTrackWatch */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0C49307AEBDD4D7AAAE6C138 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C52522AA2F5A4C9CA058600E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FB25A9D9CC3A4ECCAAEFED6C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2939AA81A9E4BD58E1EBDD0 /* StayTrackApp.swift in Sources */,
+				20DD741D44EF439B96825788 /* iOSContentView.swift in Sources */,
+				64201C47A59943178B34653F /* iOSTrackingViewModel.swift in Sources */,
+				1787D5E19A2849598F7E72A6 /* DashboardView.swift in Sources */,
+				695B71D5DB9144BF91BBCCA9 /* VisitsHistoryView.swift in Sources */,
+				D383715718F54A9EA232111E /* PlacesManagementView.swift in Sources */,
+				61C0F56D4B474CB3BF40B6B8 /* ExportReportsView.swift in Sources */,
+				F7545E06F6A24832BECC021A /* SettingsDiagnosticView.swift in Sources */,
+				CFA46519BAC04B7398A3FAB6 /* EditPlaceSheet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9D49CA411724113BCC7EE5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF96FCC1B7CA489D8DA39C10 /* StayTrackWatchApp.swift in Sources */,
+				20F02C4BB03A488DB7AEB326 /* WatchContentView.swift in Sources */,
+				3EE2EFA7E6464FDE8C8D0D2F /* WatchTrackingViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F6AA2415D12A4182B92FEFA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		34554A4D94154F73B8515422 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = "wholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		5BFB39C5D4074167859E5192 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StayTrack;
+				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "StayTrack necesita acceso a tu ubicación en segundo plano para registrar automáticamente el tiempo de permanencia en tus lugares configurados.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "StayTrack registra el tiempo transcurrido dentro de tus ubicaciones y zonas configuradas.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "StayTrack detecta movimiento para desambiguar visitas entre tu iPhone y tu Apple Watch cuando un dispositivo queda estático.";
+				INFOPLIST_KEY_UIBackgroundModes = "location";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.staytrack.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		89EB9B8078414D4B8DF1954A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StayTrack;
+				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "StayTrack necesita acceso a tu ubicación en segundo plano para registrar automáticamente el tiempo de permanencia en tus lugares configurados.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "StayTrack registra el tiempo transcurrido dentro de tus ubicaciones y zonas configuradas.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "StayTrack detecta movimiento para desambiguar visitas entre tu iPhone y tu Apple Watch cuando un dispositivo queda estático.";
+				INFOPLIST_KEY_UIBackgroundModes = "location";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.staytrack.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C85AEABAFE0F402CA6E3E2A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "StayTrack";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "StayTrack Watch registra estancias de forma autónoma en tu muñeca sin necesidad de llevar el iPhone.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "StayTrack Watch registra el tiempo en cada lugar con prioridad directa del reloj.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "StayTrack Watch detecta movimiento en la muñeca para otorgar prioridad a tus estancias activas.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.staytrack.app;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.staytrack.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "4";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		ABD9966F3BE442A2A8E17250 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "StayTrack";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "StayTrack Watch registra estancias de forma autónoma en tu muñeca sin necesidad de llevar el iPhone.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "StayTrack Watch registra el tiempo en cada lugar con prioridad directa del reloj.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "StayTrack Watch detecta movimiento en la muñeca para otorgar prioridad a tus estancias activas.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.staytrack.app;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.staytrack.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "4";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		934B2F2C174940DFBCDB1A88 /* Build configuration list for PBXProject "StayTrack" */;
+		934B2F2C174940DFBCDB1A88 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6AA2415D12A4182B92FEFA0 /* Debug */,
+				34554A4D94154F73B8515422 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5C41989698C4713B12F7193 /* Build configuration list for PBXNativeTarget "StayTrack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BFB39C5D4074167859E5192 /* Debug */,
+				89EB9B8078414D4B8DF1954A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F51CFF6D6BD44A3B9E84FEC /* Build configuration list for PBXNativeTarget "StayTrackWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C85AEABAFE0F402CA6E3E2A9 /* Debug */,
+				ABD9966F3BE442A2A8E17250 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		D5ACBAEAFC1648E2B2F15C7B /* StayTrackCore */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = StayTrackCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		79721B9F7CF141E0B794EB28 /* StayTrackCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5ACBAEAFC1648E2B2F15C7B /* StayTrackCore */;
+			productName = StayTrackCore;
+		};
+		FFCC6C07A6744508A1EE4E48 /* StayTrackCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5ACBAEAFC1648E2B2F15C7B /* StayTrackCore */;
+			productName = StayTrackCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 09584E11B0394F3581F464D9 /* Project object */;
+}
